@@ -1,0 +1,14 @@
+workspace:
+  sphere:
+    x: 0.
+    y: 0.
+    z: 1.
+    radius: 2.5
+    threshold: 0.35
+  csg_intersect_cuboid:
+    x_min: -0.4
+    x_max: 0.2
+    y_min: 0.1
+    y_max: 0.6
+    z_min: -0.5
+    z_max: 1.4

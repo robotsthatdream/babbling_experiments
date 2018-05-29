@@ -1,0 +1,28 @@
+<launch>
+    <arg name="ns" default=""/>
+    <arg name="exec_name" default="choice_heat_map"/>
+    <arg name="soi_method" default="gmm"/>
+    <arg name="mode" default="exploration"/>
+    <arg name="modality" default="meanFPFHLabHist"/>
+    <arg name="dimension" default="48"/>
+    <arg name="load_exp" default=""/>
+    <arg name="output_file" default="choice_heat_map.pcd"/>
+
+
+    <node name="$(arg exec_name)" pkg="dream_babbling" type="$(arg exec_name)" output="screen">
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/global_params.yml" ns="global"/>        
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/experiment_settings.yml" ns="experiment"/>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/modalities.yml"/>
+        
+        <rosparam ns="experiment/soi" subst_value="True">
+            method: "$(arg soi_method)"
+            mode: "$(arg mode)" 
+            load_exp: "$(arg load_exp)"
+            output_file : "$(arg output_file)"
+            modality: "$(arg modality)"
+            dimension: "$(arg dimension)"
+            threshold: "0.5"
+        </rosparam>
+        </node>
+</launch>
+<!-- /home/le_goff/ros_home/cafer_db/dream_babbling/archive/mcs_max_trials/HLabNormfpfh_workbench_1/iteration_83/ -->

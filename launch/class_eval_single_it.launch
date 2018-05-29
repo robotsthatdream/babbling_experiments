@@ -1,0 +1,38 @@
+<launch>
+    <arg name="ns" default=""/>
+    <arg name="exec_name" default="class_eval_single_it"/>
+
+    <arg name="method" default="mcs"/>
+    <arg name="archive_folder" default=""/>
+    <arg name="number_of_iteration" default="100"/>
+    <arg name="modality" default="merge"/>
+    <arg name="dimension" default="15"/>
+    <arg name="threshold" default="0.5"/>
+
+    <!--CAFER-->
+    <arg name="cafer_type" default="$(arg exec_name)"/>
+    <arg name="managed_uuid" default="none"/>
+    <!--/CAFER-->
+
+    <rosparam command="load" ns="global" file="$(find dream_babbling)/launch/params/global_params.yml"/>
+    <node name="$(arg exec_name)" pkg="dream_babbling" type="$(arg exec_name)" output="screen">
+        <rosparam ns="cafer" subst_value="True">
+            mgmt: "/management_topic"
+            freq: 10.0
+            type: "$(arg cafer_type)"
+            uuid: "$(arg managed_uuid)"
+        </rosparam>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/experiment_settings.yml" ns="experiment"/>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/modalities.yml"/>
+        <rosparam command="load" file="$(find dream_babbling)/launch/experiment/sim/env1.yml" ns="setup"/> 
+        <rosparam ns="experiment/soi"  subst_value="True">
+            method: "$(arg method)"
+            archive_folder: "$(arg archive_folder)"
+            number_of_iteration: "$(arg number_of_iteration)"
+            output_file: "class_eval_single_it.yml"
+            modality : "$(arg modality)"
+            dimension : "$(arg dimension)"
+            threshold : "$(arg threshold)"
+        </rosparam>
+    </node>
+</launch>

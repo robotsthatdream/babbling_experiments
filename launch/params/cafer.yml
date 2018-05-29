@@ -1,0 +1,5 @@
+cafer:
+  mgmt: "/management_topic"
+  freq: 1.0
+  type: "$(arg cafer_type)"
+  uuid: "$(arg managed_uuid)"

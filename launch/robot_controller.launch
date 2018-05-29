@@ -1,0 +1,67 @@
+<launch>
+    <!-- <arg name="camera_link_pose" default="0.227452 -0.0841643 0.87455 0.69823 -0.678333 0.149447 -0.185532"/> -->
+    <!-- <arg name="camera_link_pose" default="0.2 -0.0841643 0.87455 0.69823 -0.678333 0.149447 -0.185532"/> -->
+    
+    <!-- kinect_2 with crustcrawler, kinect looking downwards fully and the frame holding the camera is at 46.5 cm from the edge of the arena without the sloped extension-->
+    <!-- <arg name="camera_link_pose" default="0.94 0.17 0.75 0.55 0.6 -0.36 -0.36"/> -->
+    <!-- arg name="camera_link_pose" default="0.95 0.1 0.73 0.603601 0.590586 -0.36625 -0.382251"/ -->
+	<!-- <arg name="camera_link_pose" default="0.933978 0.063500 0.698126 0.659279 0.595833 -0.287485 -0.357332 "/> -->
+
+    <arg name="ns" default="dream_babbling"/>
+    <arg name="exec_name" default="controller_node"/>
+    <arg name="group_name" default="left_arm"/>
+
+    <arg name="right_electric_gripper" default="false"/>
+    <arg name="left_electric_gripper" default="false"/>
+
+    <arg name="left_tip_name" default="left_gripper"/>
+    <arg name="right_tip_name" default="right_gripper"/>
+    <arg name="no_sim" default="true"/>
+    <!--CAFER-->
+    <arg name="cafer_type" default="$(arg exec_name)"/>
+    <arg name="managed_uuid" default="none"/>
+    <!--/CAFER-->
+
+
+<!-- 
+    <param name="robot_description_semantic"
+         command="$(find xacro)/xacro.py inorder $(find baxter_moveit_config)/config/baxter.srdf.xacro
+                left_electric_gripper:=$(arg left_electric_gripper)
+                right_electric_gripper:=$(arg right_electric_gripper)
+                left_tip_name:=$(arg left_tip_name)
+                right_tip_name:=$(arg right_tip_name)"/> -->
+
+    <!--changing fingers type node>
+    <arg name="my_link" default="left_hand"/>
+    <arg name="my_joint" default="left_gripper_base"/>
+    <arg name="my_file" default="/urdf/electric_gripper/short_end_effector.urdf.xacro"/>
+    <node name="change_fingers" pkg="baxter_examples" type="send_urdf_fragment.py" args="-l $(arg my_link) -j $(arg my_joint) -f $(find rethink_ee_description)$(arg my_file)"/-->
+<!-- 
+
+    <group if="$(arg no_sim)">
+        <node name="static_transform" pkg="tf" type="static_transform_publisher" args=" $(arg camera_link_pose) /base /kinect2_link 100"/>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/global_params.yml" />
+    </group> -->
+
+    <rosparam command="load" file="$(find dream_babbling)/launch/params/global_params.yml" />
+    <rosparam command="load" file="$(find dream_babbling)/launch/params/planner_params.yml" ns="controller_node/planner_parameters" />
+    <node name="$(arg exec_name)" pkg="dream_babbling" type="$(arg exec_name)" output="screen" launch-prefix="terminator -x ">
+        <rosparam ns="cafer" subst_value="True">
+            mgmt: "/management_topic"
+            freq: 10.0
+            type: "$(arg cafer_type)"
+            uuid: "$(arg managed_uuid)"
+        </rosparam>
+        <remap from="/robot_description_semantic" to="/dream_babbling/controller_node/robot_description_semantic"/>
+        <!-- <param name="group_name" type="string" value="$(arg group_name)"/> -->
+
+        <!-- remap for BAXTER robot joint states babbling -->
+        <!-- <remap from="/dream_babbling/controller_node/joint_states" to="/robot/joint_states"/> -->
+        
+        <!-- remap for crustcrawler robot joint states babbling -->
+        <!-- <remap from="/dream_babbling/controller_node/joint_states" to="/crustcrawler/joint_states"/> -->
+        
+        <!-- remap for PR2 robot joint states babbling -->
+        <remap from="/dream_babbling/controller_node/joint_states" to="/joint_states"/>
+    </node>
+</launch>

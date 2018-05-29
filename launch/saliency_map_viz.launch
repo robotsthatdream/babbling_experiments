@@ -1,0 +1,25 @@
+<launch>
+    <arg name="exec_name" default="saliency_map_viz"/>
+    <arg name="modality" default="meanFPFHLabHist"/>
+    <arg name="dimension" default="48"/>
+    <arg name="soi_method" default="gmm"/>
+    <arg name="load_exp" default="/home/le_goff/ros_home/cafer_db/dream_babbling/archive/demo/1/iteration_41/"/>
+
+
+    <node name="$(arg exec_name)" pkg="dream_babbling" type="$(arg exec_name)" output="screen">
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/experiment_settings.yml" ns="experiment"/>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/modalities.yml"/>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/global_params.yml" ns="global"/>
+        <rosparam ns="experiment/soi" subst_value="True">
+            method: "$(arg soi_method)"
+            load_exp: "$(arg load_exp)"
+            modality: "$(arg modality)"
+            dimension: "$(arg dimension)"
+            threshold: "0.5"
+            increment: "0.5"
+            with_bluring : "0"
+            with_adpative_thres : "0"
+            cumul_size : "5"
+        </rosparam>
+    </node>
+</launch>

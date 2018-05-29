@@ -1,0 +1,4 @@
+geometry_msgs/Point supervoxel_center
+sensor_msgs/PointCloud2 supervoxel_cloud
+---
+std_msgs/Bool has_moved

@@ -1,0 +1,19 @@
+## Take care not to declare cyclic dependencies, like:
+## A:
+##  depends_on: "B"
+## B:
+##  depends_on: "A"
+managed:
+  dream_babbling:
+    motion_detector:
+      launch: "motion_detector.launch"
+      depends_on: "kinect2_bridge"
+    robot_controller:
+      launch: "robot_controller.launch"
+    babbling:
+      launch: "babbling.launch"
+      depends_on: "kinect2_bridge,motion_detector,robot_controller"
+externals:
+  kinect2_bridge:
+    kinect2_bridge:
+      launch: "kinect2_bridge.launch"

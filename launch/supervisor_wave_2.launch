@@ -1,0 +1,20 @@
+<launch>
+    <arg name="ns" default="dream_babbling"/>
+    <arg name="exec_name" default="supervisor_node"/>
+
+    <!--CAFER-->
+    <arg name="cafer_type" default="wave_supervisor"/>
+    <arg name="managed_uuid" default="none"/>
+    <!--/CAFER-->
+
+    <node name="classifier_evaluation" pkg="dream_babbling" type="$(arg exec_name)" ns="$(arg ns)" output="screen">
+        <rosparam ns="cafer" subst_value="True">
+            mgmt: "/management_topic"
+            freq: 1.0
+            type: "$(arg cafer_type)"
+            uuid: "$(arg managed_uuid)"
+        </rosparam>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/supervisor_wave_2.yml" ns="components"/>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/wave_2_metadata.yml"/>
+    </node>
+</launch>

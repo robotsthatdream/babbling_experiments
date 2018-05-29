@@ -1,0 +1,18 @@
+## Take care not to declare cyclic dependencies, like:
+## A:
+##  depends_on: "B"
+## B:
+##  depends_on: "A"
+managed:
+  dream_babbling:
+    motion_detector:
+      launch: "motion_detector.launch"
+    robot_controller:
+      launch: "robot_controller.launch"
+    babbling:
+      launch: "babbling.launch modality:=colorLabHist dimension:=15"
+      depends_on: "motion_detector,robot_controller"
+    data_synchronizer:
+      launch: "data_synchronizer.launch"
+      depends_on: "motion_detector,robot_controller,babbling"
+

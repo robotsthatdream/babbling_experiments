@@ -1,0 +1,38 @@
+<launch>
+    <arg name="ns" default=""/>
+    <arg name="exec_name" default="replay_babbling"/>
+    <arg name="camera_link_pose" default="1.8 0.4 0.4 -0.248 0 0.969 0"/>
+
+    <arg name="method" default="gmm"/>
+    <arg name="archive_folder" default=""/>
+    <arg name="number_of_iteration" default="100"/>
+    <arg name="size_of_bag_of_points" default="1"/>   
+    <arg name="modality" default="normalHist"/>
+    <arg name="dimension" default="15"/>
+
+    <!--CAFER-->
+    <arg name="cafer_type" default="$(arg exec_name)"/>
+    <arg name="managed_uuid" default="none"/>
+    <!--/CAFER-->
+    <node name="statict_transform" pkg="tf" type="static_transform_publisher" args=" $(arg camera_link_pose) /base /camera_link 100"/>
+
+    <rosparam command="load" ns="global" file="$(find dream_babbling)/launch/params/global_params.yml"/>
+    <node name="$(arg exec_name)" pkg="dream_babbling" type="$(arg exec_name)" output="screen">
+        <rosparam ns="cafer" subst_value="True">
+            mgmt: "/management_topic"
+            freq: 10.0
+            type: "$(arg cafer_type)"
+            uuid: "$(arg managed_uuid)"
+        </rosparam>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/experiment_settings.yml" ns="experiment"/>
+        <rosparam ns="experiment/soi"  subst_value="True">
+            method: "$(arg method)"
+            archive_folder: "$(arg archive_folder)"
+            number_of_iteration: "$(arg number_of_iteration)"
+            size_of_bag_of_points: "$(arg size_of_bag_of_points)"
+            output_file: "classifier_eval.yml"
+            modality : "$(arg modality)"
+            dimension : "$(arg dimension)"
+        </rosparam>
+    </node>
+</launch>

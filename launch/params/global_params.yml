@@ -1,0 +1,88 @@
+# All settings in this file will be uploaded to the parameter server under the project namespace:
+# /namespace/params/setting_1 ... setting_n
+#
+# Parameters declared as <arg name="arg_param" default="param_value"/>
+#                          <node name="node_name" pkg="package" type="node_type" ns="namespace" output="screen">
+#                            <param name="param" type="double" value="$(arg arg_param)"/>
+#
+# inside launch files will be uploaded to the parameter server under the node's namespace:
+# /namespace/node_name/param
+#
+# The guideline would be to put commonly used/shared parameters under the namespace and parameters specific to a node
+# under the node's namespace.
+
+management_topic: "/management_topic"
+robot: "pr2"
+
+rgb_topic: "/kinect2/qhd/image_color"
+depth_topic: "/kinect2/qhd/image_depth_rect"
+rgb_info_topic: "/kinect2/qhd/camera_info"
+depth_info_topic: "/kinect2/qhd/camera_info"
+cloud_topic: "/kinect2/qhd/points"
+
+#with kinect_2
+rgb_topic: "/kinect2/qhd/image_color"
+depth_topic: "/kinect2/qhd/image_depth_rect"
+rgb_info_topic: "/kinect2/qhd/camera_info"
+depth_info_topic: "/kinect2/qhd/camera_info"
+cloud_topic: "/kinect2/qhd/points"
+
+motion_detector_topic: "/dream_babbling/motion_detector_node"
+motion_detector_service: "/dream_babbling/motion_detector_node/is_moving"
+
+controller_server: "controller_node"
+database_server: "/cafer_core/db_manager_node"
+
+robot_controller_feedback_topic: "/dream_babbling/controller_node/feedback"
+
+# dataset_topic_colorH: "/dream_babbling/babbling_node/dataset/colorH"
+# dataset_topic_colorS: "/dream_babbling/babbling_node/dataset/colorS"
+# dataset_topic_colorV: "/dream_babbling/babbling_node/dataset/colorV"
+# dataset_topic_normalX: "/dream_babbling/babbling_node/dataset/normalX"
+# dataset_topic_normalY: "/dream_babbling/babbling_node/dataset/normalY"
+# dataset_topic_normalZ: "/dream_babbling/babbling_node/dataset/normalZ"
+# dataset_topic_fpfh: "/dream_babbling/babbling_node/dataset/fpfh"
+# dataset_topic_merged: "/dream_babbling/babbling_node/dataset/merged"
+# dataset_topic_normal: "/dream_babbling/babbling_node/dataset/normal"
+# dataset_topic_colorHSV: "/dream_babbling/babbling_node/dataset/colorHSV"
+# dataset_topic_colorRGB: "/dream_babbling/babbling_node/dataset/colorRGB"
+# dataset_topic_colorNormalHist: "/dream_babbling/babbling_node/dataset/colorNormalHist"
+# dataset_topic_normalHist: "/dream_babbling/babbling_node/dataset/normalHist"
+# dataset_topic_normalHistLarge: "/dream_babbling/babbling_node/dataset/normalHistLarge"
+# dataset_topic_colorHist: "/dream_babbling/babbling_node/dataset/colorHist"
+# dataset_topic_colorHSVNormal: "/dream_babbling/babbling_node/dataset/colorHSVNormal"
+# dataset_topic_colorRGBNormal: "/dream_babbling/babbling_node/dataset/colorRGBNormal"
+# dataset_topic_colorLab : "/dream_babbling/babbling_node/dataset/colorLab"
+# dataset_topic_colorL : "/dream_babbling/babbling_node/dataset/colorL"
+# dataset_topic_colora : "/dream_babbling/babbling_node/dataset/colora"
+# dataset_topic_colorb : "/dream_babbling/babbling_node/dataset/colorb"
+# dataset_topic_colorLabHist : "/dream_babbling/babbling_node/dataset/colorLabHist"
+dataset_topic_meanFPFHLabHist : "/dream_babbling/babbling_node/dataset/meanFPFHLabHist"
+# dataset_topic_colorLabNormalHist : "/dream_babbling/babbling_node/dataset/colorLabNormalHist"
+
+# gmm_topic_colorH: "/dream_babbling/babbling_node/gmm/colorH"
+# gmm_topic_colorS: "/dream_babbling/babbling_node/gmm/colorS"
+# gmm_topic_colorV: "/dream_babbling/babbling_node/gmm/colorV"
+# gmm_topic_normalX: "/dream_babbling/babbling_node/gmm/normalX"
+# gmm_topic_normalY: "/dream_babbling/babbling_node/gmm/normalY"
+# gmm_topic_normalz: "/dream_babbling/babbling_node/gmm/normalZ"
+# gmm_topic_fpfh: "/dream_babbling/babbling_node/gmm/fpfh"
+# gmm_topic_merged: "/dream_babbling/babbling_node/gmm/merged"
+# gmm_topic_normal : "/dream_babbling/babbling_node/gmm/normal"
+# gmm_topic_colorHSV : "/dream_babbling/babbling_node/gmm/colorHSV"
+# gmm_topic_colorRGB : "/dream_babbling/babbling_node/gmm/colorRGB"
+# gmm_topic_colorNormalHist: "/dream_babbling/babbling_node/gmm/colorNormalHist"
+# gmm_topic_normalHist: "/dream_babbling/babbling_node/gmm/normalHist"
+# gmm_topic_normalHistLarge: "/dream_babbling/babbling_node/gmm/normalHistLarge"
+# gmm_topic_colorHist: "/dream_babbling/babbling_node/gmm/colorHist"
+# gmm_topic_colorHSVNormal: "/dream_babbling/babbling_node/gmm/colorHSVNormal"
+# gmm_topic_colorRGBNormal: "/dream_babbling/babbling_node/gmm/colorRGBNormal"
+# gmm_topic_colorL: "/dream_babbling/babbling_node/gmm/colorL"
+# gmm_topic_colora: "/dream_babbling/babbling_node/gmm/colora"
+# gmm_topic_colorb: "/dream_babbling/babbling_node/gmm/colorb"
+# gmm_topic_colorLab: "/dream_babbling/babbling_node/gmm/colorLab"
+# gmm_topic_colorLabHist : "/dream_babbling/babbling_node/gmm/colorLabHist"
+gmm_topic_meanFPFHLabHist : "/dream_babbling/babbling_node/gmm/meanFPFHLabHist"
+# gmm_topic_colorLabNormalHist: "/dream_babbling/babbling_node/gmm/colorLabNormalHist"
+
+number_of_trials: "2"

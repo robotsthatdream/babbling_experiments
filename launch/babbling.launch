@@ -1,0 +1,40 @@
+<launch>
+    <arg name="ns" default=""/>
+    <arg name="exec_name" default="babbling_node"/>
+    <arg name="soi_method" default="gmm"/>
+    <arg name="mode" default="exploration"/>
+    <arg name="number_of_iteration" default="400"/>    
+    <arg name="modality" default="meanFPFHLabHist"/>
+    <arg name="dimension" default="48"/>
+
+    <!--CAFER-->
+    <arg name="cafer_type" default="babbling_wave"/>
+    <arg name="managed_uuid" default="none"/>
+    <!--/CAFER-->
+
+
+    <node name="$(arg exec_name)" pkg="dream_babbling" type="$(arg exec_name)" output="log" launch-prefix="terminator -x">        
+        <rosparam ns="cafer" subst_value="True">
+            mgmt: "/management_topic"
+            freq: 10.0
+            type: "$(arg cafer_type)"
+            uuid: "$(arg managed_uuid)"
+        </rosparam>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/experiment_settings.yml" ns="experiment"/>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/modalities.yml"/>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/global_params.yml" ns="global"/>
+
+        <rosparam ns="experiment/soi" subst_value="True">
+            number_of_iteration: "$(arg number_of_iteration)"
+            method: "$(arg soi_method)"
+            mode: "$(arg mode)" 
+            load_exp: ""
+            modality: "$(arg modality)"
+            dimension: "$(arg dimension)"
+            threshold: "0.5"
+            output_file: "$(env ROS_HOME)/cafer_db/dream_babbling/babbling/classifier_eval.yml"
+            max_trials : "2"
+        </rosparam>
+        </node>
+</launch>
+<!-- /home/le_goff/ros_home/cafer_db/dream_babbling/archive/workbench-5/archive/11-01-18/iteration_433/ -->

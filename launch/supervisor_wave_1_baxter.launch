@@ -1,0 +1,26 @@
+<launch>
+    <arg name="ns" default="dream_babbling"/>
+    <arg name="exec_name" default="supervisor_node"/>
+    <arg name="launch_list" default="launch/params/supervisor_wave_1_baxter.yml"/>
+    <arg name="no_sim" default="true"/>
+
+    <!--CAFER-->
+    <arg name="cafer_type" default="wave_supervisor"/>
+    <arg name="managed_uuid" default="none"/>
+    <!--/CAFER-->
+
+    <rosparam command="load" file="$(find dream_babbling)/launch/params/global_params.yml" ns="$(arg ns)/params"/>
+   <node name="babbling" pkg="dream_babbling" type="$(arg exec_name)" ns="$(arg ns)"  output="log">
+        <rosparam param="no_sim"> $(arg simulation)</rosparam>
+        <rosparam ns="cafer" subst_value="True">
+            mgmt: "/management_topic"
+            freq: 1.0
+            type: "$(arg cafer_type)"
+            uuid: "$(arg managed_uuid)"
+        </rosparam>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/experiment_settings.yml" ns="experiment"/>
+        <rosparam command="load" file="$(find dream_babbling)/$(arg launch_list)" ns="components"/>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/wave_1_metadata.yml"/>
+    </node>
+</launch>
+

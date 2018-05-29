@@ -1,0 +1,15 @@
+<launch>
+    <arg name="exec_name" default="display_workspace"/> 
+    <arg name="camera_link_pose" default="0.933978 0.063500 0.698126 0.659279 0.595833 -0.287485 -0.357332 "/>
+    <arg name="no_sim" default="true"/>
+
+
+     <group if="$(arg no_sim)">
+        <node name="static_transform" pkg="tf" type="static_transform_publisher" args=" $(arg camera_link_pose) /base /kinect2_link 100"/>
+    </group>
+
+    <rosparam command="load" file="$(find dream_babbling)/launch/params/global_params.yml" ns="global"/>
+    <node name="$(arg exec_name)" pkg="dream_babbling" type="$(arg exec_name)"  output="screen">
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/experiment_settings.yml" ns="experiment"/>
+    </node>
+</launch>

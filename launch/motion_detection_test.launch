@@ -1,0 +1,11 @@
+<launch>
+    <arg name="ns" default="md_test"/>
+    <arg name="exec_name" default="motion_detection_test"/>
+   
+    <include file="$(find dream_babbling)/launch/motion_detector.launch"/>
+
+
+    <node name="$(arg exec_name)" pkg="dream_babbling" type="$(arg exec_name)"  output="log" launch-prefix="terminator -x gdb --args">
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/experiment_settings.yml" ns="experiment"/>
+    </node>
+</launch>

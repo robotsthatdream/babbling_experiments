@@ -1,0 +1,25 @@
+<launch>
+    <arg name="ns" default="dream_babbling"/>
+    <arg name="exec_name" default="motion_detector_node"/>
+    <!--arg name="ite_end_topic_name" default="babbling_node/is_finish"/-->
+
+    <!--CAFER-->
+    <arg name="cafer_type" default="$(arg exec_name)"/>
+    <arg name="managed_uuid" default="none"/>
+    <!--/CAFER-->
+   
+    <rosparam command="load" file="$(find dream_babbling)/launch/params/global_params.yml" ns="$(arg ns)"/>
+
+    <node name="$(arg exec_name)" pkg="dream_babbling" type="$(arg exec_name)"  output="log" launch-prefix="terminator -x">
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/experiment_settings.yml" ns="experiment"/>
+        <rosparam ns="cafer" subst_value="True">
+            mgmt: "/management_topic"
+            freq: 10.0
+            type: "$(arg cafer_type)"
+            uuid: "$(arg managed_uuid)"
+        </rosparam>
+        <!--rosparam subst_value="true">
+            ite_end_topic_name: "$(arg ns)/$(arg ite_end_topic_name)"
+        </rosparam-->
+    </node>
+</launch>

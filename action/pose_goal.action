@@ -1,0 +1,9 @@
+#goal definition
+Header header
+float64[] target_pose
+float64[] target_normal
+---
+#result definition
+---
+#feedback definition
+float64[] joints_positions

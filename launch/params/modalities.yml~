@@ -1,0 +1,13 @@
+modalities:
+  modality_1:
+    name: colorLabHist
+    dimension: 15
+  modality_2:
+    name: colorLabNormalHist
+    dimension: 30
+  modality_3: 
+    name: normalHist
+    dimension: 15
+  modality_4:
+    name: fpfh
+    dimension: 33

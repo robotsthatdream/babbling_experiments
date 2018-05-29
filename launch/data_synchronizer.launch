@@ -1,0 +1,22 @@
+<launch>
+    <arg name="ns" default=""/>
+    <arg name="exec_name" default="data_sync_node"/>
+
+
+    <!--CAFER-->
+    <arg name="cafer_type" default="$(arg exec_name)"/>
+    <arg name="managed_uuid" default="none"/>
+    <!--/CAFER-->
+  
+    <rosparam command="load" file="$(find dream_babbling)/launch/params/global_params.yml" ns="$(arg ns)"/>
+    <node name="$(arg exec_name)" pkg="dream_babbling" type="$(arg exec_name)" output="log">
+
+        <rosparam ns="cafer" subst_value="True">
+            mgmt: "/management_topic"
+            freq: 10.0
+            type: "$(arg cafer_type)"
+            uuid: "$(arg managed_uuid)"
+        </rosparam>
+
+        </node>
+</launch>

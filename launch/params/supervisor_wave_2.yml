@@ -1,0 +1,9 @@
+## Take care not to declare cyclic dependencies, like:
+## A:
+##  depends_on: "B"
+## B:
+##  depends_on: "A"
+managed:
+  dream_babbling:
+    motion_detector:
+      launch: "classifier_eval.launch"

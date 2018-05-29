@@ -1,0 +1,33 @@
+<launch>
+    <arg name="ns" default=""/>
+    <arg name="exec_name" default="class_eval_node"/>
+
+    <arg name="method" default="gmm"/>
+    <arg name="archive_folder" default=""/>
+    <arg name="modality" default="meanFPFHLabHist"/>
+    <arg name="dimension" default="48"/>
+    <arg name="threshold" default="0.5"/>
+
+    <!--CAFER-->
+    <arg name="cafer_type" default="$(arg exec_name)"/>
+    <arg name="managed_uuid" default="none"/>
+    <!--/CAFER-->
+
+
+    <node name="$(arg exec_name)" pkg="dream_babbling" type="$(arg exec_name)" output="screen">
+        <rosparam command="load" ns="global" file="$(find dream_babbling)/launch/params/global_params.yml"/>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/experiment_settings.yml" ns="experiment"/>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/modalities.yml"/>
+        <rosparam ns="experiment/soi"  subst_value="True">
+            method: "$(arg method)"
+            archive_folder: "$(arg archive_folder)"
+            output_file: "classifier_eval_2.yml"
+            modality : "$(arg modality)"
+            dimension : "$(arg dimension)"
+            threshold : "$(arg threshold)"
+            increment: "0.1"
+            with_bluring : "0"
+            with_adpative_thres : "0"
+        </rosparam>
+    </node>
+</launch>

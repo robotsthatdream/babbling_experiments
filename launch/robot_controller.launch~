@@ -1,0 +1,53 @@
+<launch>
+    <arg name="camera_link_pose" default="0.247 0.095 0.905 -0.019 0.527 0.016 0.850"/>
+    <arg name="ns" default="dream_babbling"/>
+    <arg name="exec_name" default="controller_node"/>
+    <arg name="group_name" default="left_arm"/>
+
+    <arg name="right_electric_gripper" default="false"/>
+    <arg name="left_electric_gripper" default="false"/>
+
+    <arg name="left_tip_name" default="left_gripper"/>
+    <arg name="right_tip_name" default="right_gripper"/>
+    <arg name="no_sim" default="true"/>
+    <!--CAFER-->
+    <arg name="cafer_type" default="$(arg exec_name)"/>
+    <arg name="managed_uuid" default="none"/>
+    <!--/CAFER-->
+
+
+
+    <param name="robot_description_semantic"
+         command="$(find xacro)/xacro.py --inorder $(find baxter_moveit_config)/config/baxter.srdf.xacro
+                left_electric_gripper:=$(arg left_electric_gripper)
+                right_electric_gripper:=$(arg right_electric_gripper)
+                left_tip_name:=$(arg left_tip_name)
+                right_tip_name:=$(arg right_tip_name)"/>
+
+    <!--changing fingers type node>
+    <arg name="my_link" default="left_hand"/>
+    <arg name="my_joint" default="left_gripper_base"/>
+    <arg name="my_file" default="/urdf/electric_gripper/short_end_effector.urdf.xacro"/>
+    <node name="change_fingers" pkg="baxter_examples" type="send_urdf_fragment.py" args="-l $(arg my_link) -j $(arg my_joint) -f $(find rethink_ee_description)$(arg my_file)"/-->
+
+
+    <group if="$(arg no_sim)">
+        <node name="static_transform" pkg="tf" type="static_transform_publisher" args=" $(arg camera_link_pose) /base /camera_link 100"/>
+        <rosparam command="load" file="$(find dream_babbling)/launch/params/global_params.yml" />
+    </group>
+    <!--node name="$(arg exec_name)" pkg="dream_babbling" type="$(arg exec_name)" output="screen" launch-prefix="xterm -e gdb args"-->
+    <rosparam command="load" file="$(find dream_babbling)/launch/params/global_params.yml" />
+    <rosparam command="load" file="$(find dream_babbling)/launch/params/planner_params.yml" ns="controller_node/planner_parameters" />
+    <node name="$(arg exec_name)" pkg="dream_babbling" type="$(arg exec_name)" output="screen" launch-prefix="xterm -e">
+        <rosparam ns="cafer" subst_value="True">
+            mgmt: "/management_topic"
+            freq: 10.0
+            type: "$(arg cafer_type)"
+            uuid: "$(arg managed_uuid)"
+        </rosparam>
+        <remap from="/robot_description_semantic" to="/dream_babbling/robot_description_semantic"/>
+        <param name="group_name" type="string" value="$(arg group_name)"/>
+        <!--remap from="/dream_babbling/joint_states" to="/robot/joint_states"/-->
+
+    </node>
+</launch>

@@ -1,0 +1,4 @@
+modalities:
+  modality_1:
+    name: meanFPFHLabHist
+    dimension: 48
